@@ -97,16 +97,16 @@
 
         <div class="grid">
 
-            <Button Color="ButtonColor.Primary" Size="Size.Large" @onclick="OnShowRoomNumberClick"> Numer sali </Button>
-            <Button Color="ButtonColor.Primary" Size="Size.Large" @onclick="OnShowNamesClick"> Nazwiska </Button>
-            <Button Color="ButtonColor.Primary" Size="Size.Large" @onclick="OnShowLoadClick"> Wczytaj </Button>
-            <Button Color="ButtonColor.Primary" Size="Size.Large" @onclick="@(() => { editMode = true; })"> Edytuj
+            <Button Color="ButtonColor.Secondary" Size="Size.Large" @onclick="OnShowRoomNumberClick"> Numer Sali </Button>
+            <Button Color="ButtonColor.Secondary" Size="Size.Large" @onclick="OnShowNamesClick"> Osoby </Button>
+            <Button Color="ButtonColor.Secondary" Size="Size.Large" @onclick="OnShowLoadClick"> Wczytaj </Button>
+            <Button Color="ButtonColor.Secondary" Size="Size.Large" @onclick="@(() => { editMode = true; })"> Edytuj
             </Button>
-            <Button Color="ButtonColor.Primary" Size="Size.Large" @onclick="SaveAsJson"> Zapisz do JSONA </Button>
+            <Button Color="ButtonColor.Secondary" Size="Size.Large" @onclick="SaveAsJson"> Zapisz do JSONA </Button>
 
             @if (editMode)
             {
-                <Button Color="ButtonColor.Primary" Size="Size.Large" @onclick="@(() => { editMode = false; })"> Zapisz
+                <Button Color="ButtonColor.Secondary" Size="Size.Large" @onclick="@(() => { editMode = false; })"> Zapisz
                     zmiany </Button>
             }
 
@@ -118,7 +118,7 @@
 
 
 
-<Modal @ref="RoomNumber" title="Numer sali" IsVerticallyCentered="true">
+<Modal @ref="RoomNumber" title="Numer Sali" IsVerticallyCentered="true">
     <BodyTemplate>
         <input type="text" @bind="roomNumber" />
     </BodyTemplate>
@@ -126,7 +126,7 @@
     </FooterTemplate>
 </Modal>
 
-<Modal @ref="People" title="Nazwiska" IsVerticallyCentered="true">
+<Modal @ref="People" title="Osoby" IsVerticallyCentered="true">
     <BodyTemplate>
         <textarea @bind="peopleNames" rows="5"></textarea>
     </BodyTemplate>
