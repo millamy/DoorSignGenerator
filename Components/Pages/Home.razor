@@ -20,7 +20,7 @@
                     <img src="/logo_uj.png" alt="placeholder" />
 
                     <!-- Room Number -->
-                    <div class="roomNumber" style="margin-bottom: @roomNumberMarginBottom; margin-left: @roomNumberMarginLeft;font-family: @roomNumberFont;">
+                    <div class="roomNumber" style="margin-top: @roomNumberMarginTop; margin-left: @roomNumberMarginLeft;font-family: @roomNumberFont;">
                         @if (editMode)
                         {
                             <!-- Room Number Styling Controls -->
@@ -34,16 +34,17 @@
                                 <label>Font Style:</label>
                                 <input type="text" @bind="roomNumberFont" />
 
-                                 <label>Margin Bottom:</label>
-                                <input type="text" @bind="roomNumberMarginBottom" />
+                                 <label>Margin Top:</label>
+                                <input type="text" @bind="roomNumberMarginTop" />
 
                                 <label>Margin Left:</label>
                                 <input type="text" @bind="roomNumberMarginLeft" />
                             </div>
 
-                            <textarea class="roomNumber" rows="1" cols="20"
-                                style="color: @roomNumberColor; font-size: @roomNumberFontSize"
-                                @bind="@roomNumber"></textarea>
+                            <textarea class="roomNumber" rows="1" cols="10"
+    style="color: @roomNumberColor; font-size: @roomNumberFontSize; margin-top: @roomNumberMarginTop"
+    @bind="@roomNumber"></textarea>
+
                         }
                         else
                         {
@@ -56,7 +57,7 @@
 
 
                 <!-- Names List Box -->
-                <div class="names-container" style="margin-bottom: @namesMarginBottom; margin-left: @namesMarginLeft; font-family: @namesFont;">
+                <div class="names-container" style="margin-top: @namesMarginTop; margin-left: @namesMarginLeft; font-family: @namesFont;">
                     @if (editMode)
                     {
                         <!-- Names Styling Controls -->
@@ -70,15 +71,16 @@
                             <label>Font Style:</label>
                             <input type="text" @bind="namesFont" />
 
-                            <label>Margin Bottom:</label>
-                            <input type="text" @bind="namesMarginBottom" />
+                            <label>Margin Top:</label>
+                            <input type="text" @bind="namesMarginTop" />
 
                             <label>Margin Left:</label>
                             <input type="text" @bind="namesMarginLeft" />
                         </div>
 
-                        <textarea class="names" rows="4" cols="25" style="color: @namesColor; font-size: @namesFontSize;"
-                            @bind="@peopleNames"></textarea>
+                       <textarea class="names" rows="2" cols="15" style="color: @namesColor; font-size: @namesFontSize; margin-top: @namesMarginTop;"
+    @bind="@peopleNames"></textarea>
+
                     }
                     else
                     {
@@ -156,7 +158,7 @@
     private string peopleNames = "";
     private bool editMode = false;
     private string roomNumberColor = "black";
-    private string roomNumberFontSize = "95px";
+    private string roomNumberFontSize = "115px";
 
     private string roomNumberFont = "Arial";
 
@@ -164,10 +166,10 @@
     private string namesFontSize = "70px";
      private string namesFont = "Arial";
 
-     private string namesMarginBottom ="20px";
+     private string namesMarginTop ="20px";
      private string namesMarginLeft = "200px";
 
-     private string roomNumberMarginBottom ="-25px";
+     private string roomNumberMarginTop ="55px";
      private string roomNumberMarginLeft = "0px";
 
     private Info info;
