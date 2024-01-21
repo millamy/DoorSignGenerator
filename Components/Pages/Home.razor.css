@@ -93,3 +93,23 @@ img {
 .names textarea {
     width: 60%; /* Adjust the width based on your preference */
 }
+
+@media print {
+    @page {
+        size: landscape;
+    }
+
+    body * {
+        visibility: hidden;
+    }
+
+    .printable-section, .printable-section * {
+        visibility: visible;
+    }
+
+    .printable-section {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+}
