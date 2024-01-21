@@ -16,7 +16,7 @@ img {
 }
 
 .grid {
-    width: 25%;
+    width: 100%;
     display: grid;
     grid-template-columns: 1fr;
     grid-gap: 10px;
@@ -38,6 +38,10 @@ img {
     flex-direction: column;
     height: 100%;
     width: 75%;
+}
+
+.filename {
+    height: fit-content;
 }
 
 .field {

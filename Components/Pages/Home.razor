@@ -118,8 +118,12 @@
             </div>
         </div>
 
+        <div class="side-panel">
+        <div class="filename">
+                        <label for="fileName">Nazwa pliku:</label>
+                        <input type="text" @bind="fileName" id="fileName" placeholder="Wpisz nazwę pliku" />
+                     </div>  
         <div class="grid">
-
             <Button style="@($"background-color: #5dbea3; {btnCustome}")" class="bi bi-building" Size="Size.Large" @onclick="OnShowRoomNumberClick"> Numer Sali </Button>
             <Button style="@($"background-color: #1283e6; {btnCustome}")" class="bi bi-person-circle" Size="Size.Large" @onclick="OnShowNamesClick"> Osoby </Button>
             <Button style="@($"background-color: #5adbb5; {btnCustome}")" class="bi bi-file-earmark-arrow-up" Size="Size.Large" @onclick="OnShowLoadClick"> Wczytaj </Button>
@@ -134,7 +138,8 @@
                     zmiany </Button>
             }
             
-
+        
+        </div>
         </div>
     </div>
 
@@ -202,7 +207,8 @@
     private string logoMarginLeft = "0px";
     private string logoWidth = "200px";
     private string logoHeight = "300px"; 
-    
+
+    private string fileName = "data.json";
 
     private async Task LoadFiles(InputFileChangeEventArgs e)
     {
@@ -220,17 +226,22 @@
             roomNumber = info.RoomNumber;
         }
     }
+
     private async Task SaveAsJson()
     {
-        Info data = new Info();
-        data.RoomNumber = roomNumber;
-        data.Names = peopleNames;
-        var json = System.Text.Json.JsonSerializer.Serialize(data);
+        Info data = new Info
+        {
+            RoomNumber = roomNumber,
+            Names = peopleNames
+        };
 
+        var json = JsonSerializer.Serialize(data);
         var jsRuntime = JS;
+        
+        var safeFileName = string.IsNullOrWhiteSpace(fileName) ? "data.json" : fileName;
+        if (!safeFileName.EndsWith(".json")) safeFileName += ".json";
 
-        await jsRuntime.InvokeVoidAsync("saveAsFile", "data.json", json, "application/json");
-
+        await jsRuntime.InvokeVoidAsync("saveAsFile", safeFileName, json, "application/json");
     }
     
     private async Task Print()
