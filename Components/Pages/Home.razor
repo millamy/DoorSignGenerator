@@ -17,9 +17,28 @@
             <div class="printable-section">
                 <BlazorCaptureElement Token="Form" class="flex-fill">
                     <div class="header">
-                        <!-- Logo -->
-                        <img src="/logo_uj.png" alt="placeholder" />
+                        <div class="logo-container">
+                            <!-- Logo -->
+                            <img src="/logo_uj.png" alt="logo" style="margin-top: @logoMarginTop; margin-left: @logoMarginLeft; width: @logoWidth; height: @logoHeight;"/>
 
+                            @if (editMode)
+                            {
+                                <!-- Logo Styling Controls -->
+                                <div class="logo-styling-controls">
+                                    <label>Margin Top:</label>
+                                    <input type="text" @bind="logoMarginTop"/>
+
+                                    <label>Margin Left:</label>
+                                    <input type="text" @bind="logoMarginLeft"/>
+
+                                    <label>Width:</label>
+                                    <input type="text" @bind="logoWidth"/>
+
+                                    <label>Height:</label>
+                                    <input type="text" @bind="logoHeight"/>
+                                </div>
+                            }
+                        </div>
                         <!-- Room Number -->
                         <div class="roomNumber" style="margin-top: @roomNumberMarginTop; margin-left: @roomNumberMarginLeft;font-family: @roomNumberFont;">
                             @if (editMode)
@@ -27,19 +46,19 @@
                                 <!-- Room Number Styling Controls -->
                                 <div class="styling-controls">
                                     <label>Color:</label>
-                                    <input type="color" @bind="roomNumberColor" />
+                                    <input type="color" @bind="roomNumberColor"/>
 
                                     <label>Font Size:</label>
-                                    <input type="text" @bind="roomNumberFontSize" />
+                                    <input type="text" @bind="roomNumberFontSize"/>
 
                                     <label>Font Style:</label>
-                                    <input type="text" @bind="roomNumberFont" />
+                                    <input type="text" @bind="roomNumberFont"/>
 
                                     <label>Margin Top:</label>
-                                    <input type="text" @bind="roomNumberMarginTop" />
+                                    <input type="text" @bind="roomNumberMarginTop"/>
 
                                     <label>Margin Left:</label>
-                                    <input type="text" @bind="roomNumberMarginLeft" />
+                                    <input type="text" @bind="roomNumberMarginLeft"/>
                                 </div>
 
                                 <textarea class="roomNumber" rows="1" cols="10"
@@ -111,7 +130,7 @@
 
             @if (editMode)
             {
-                <Button Color="ButtonColor.Secondary" Size="Size.Large" @onclick="@(() => { editMode = false; })"> Zapisz
+                <Button style="@($"background-color: #55c2da; {btnCustome}")" class="bi bi-save" Size="Size.Large" @onclick="@(() => { editMode = false; })"> Zapisz
                     zmiany </Button>
             }
             
@@ -178,6 +197,12 @@
      private string roomNumberMarginLeft = "0px";
 
     private Info info;
+    
+    private string logoMarginTop = "0px";
+    private string logoMarginLeft = "0px";
+    private string logoWidth = "200px";
+    private string logoHeight = "300px"; 
+    
 
     private async Task LoadFiles(InputFileChangeEventArgs e)
     {

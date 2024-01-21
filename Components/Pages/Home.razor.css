@@ -55,6 +55,11 @@ img {
     align-items: flex-start;
 }
 
+.logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
 .roomNumber {
     display: flex;
@@ -77,10 +82,20 @@ img {
 
 .styling-controls {
     display: flex;
+    height: fit-content;
     flex-direction: row;
     justify-content: center;
     margin-bottom: 10px; /* Adjust the margin for spacing between controls and textarea */
 }
+
+.logo-styling-controls {
+    display: flex;
+    height: fit-content;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 10px; /* Adjust the margin for spacing between controls and textarea */
+}
+
 
 .styling-controls label {
     margin-right: 10px; /* Adjust the margin between the color and font size labels */
@@ -95,10 +110,6 @@ img {
 }
 
 @media print {
-    @page {
-        size: landscape;
-    }
-
     body * {
         visibility: hidden;
     }
