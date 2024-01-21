@@ -99,12 +99,12 @@
 
         <div class="grid">
 
-            <Button Color="ButtonColor.Secondary" Size="Size.Large" @onclick="OnShowRoomNumberClick"> Numer Sali </Button>
-            <Button Color="ButtonColor.Secondary" Size="Size.Large" @onclick="OnShowNamesClick"> Osoby </Button>
-            <Button Color="ButtonColor.Secondary" Size="Size.Large" @onclick="OnShowLoadClick"> Wczytaj </Button>
-            <Button Color="ButtonColor.Secondary" Size="Size.Large" @onclick="@(() => { editMode = true; })"> Edytuj
+            <Button style="@($"background-color: #5dbea3; {btnCustome}")" class="bi bi-building" Size="Size.Large" @onclick="OnShowRoomNumberClick"> Numer Sali </Button>
+            <Button style="@($"background-color: #1283e6; {btnCustome}")" class="bi bi-person-circle" Size="Size.Large" @onclick="OnShowNamesClick"> Osoby </Button>
+            <Button style="@($"background-color: #5adbb5; {btnCustome}")" class="bi bi-file-earmark-arrow-up" Size="Size.Large" @onclick="OnShowLoadClick"> Wczytaj </Button>
+            <Button style="@($"background-color: #55c2da; {btnCustome}")" class="bi bi-pencil-square" Size="Size.Large" @onclick="@(() => { editMode = true; })"> Edytuj
             </Button>
-            <Button Color="ButtonColor.Secondary" Size="Size.Large" @onclick="SaveAsJson"> Zapisz do JSONA </Button>
+            <Button style="@($"background-color: #1283e6; {btnCustome}")" class="bi bi-filetype-json" Size="Size.Large" @onclick="SaveAsJson"> Zapisz do JSONA </Button>
 
             @if (editMode)
             {
@@ -157,6 +157,8 @@
     private bool isLoading;
     private string peopleNames = "";
     private bool editMode = false;
+
+    private string btnCustome = "font-size: 26px";
     private string roomNumberColor = "black";
     private string roomNumberFontSize = "115px";
 
@@ -166,10 +168,10 @@
     private string namesFontSize = "70px";
      private string namesFont = "Arial";
 
-     private string namesMarginTop ="20px";
-     private string namesMarginLeft = "200px";
+     private string namesMarginTop ="3px";
+     private string namesMarginLeft = "220px";
 
-     private string roomNumberMarginTop ="55px";
+     private string roomNumberMarginTop ="35px";
      private string roomNumberMarginLeft = "0px";
 
     private Info info;
