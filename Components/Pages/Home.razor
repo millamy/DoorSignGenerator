@@ -1,0 +1,274 @@
+﻿@page "/"
+@using BlazorSchool.Components.Web.UI
+@using BlazorSchool.Components.Web.Variants
+@using System.IO
+@using System.Text.Json
+@using Microsoft.AspNetCore.Hosting
+@inject IWebHostEnvironment Environment
+@using Microsoft.JSInterop;
+@inject IJSRuntime JS
+@rendermode InteractiveServer
+
+<PageTitle>Forms</PageTitle>
+
+<BlazorLibrary>
+    <div class="positioning">
+        <div class="main-page">
+            <div class="printable-section">
+                <BlazorCaptureElement Token="Form" class="flex-fill">
+                    <div class="header">
+                        <div class="logo-container">
+                            <!-- Logo -->
+                            <img src="/logo_uj.png" alt="logo" style="margin-top: @logoMarginTop; margin-left: @logoMarginLeft; width: @logoWidth; height: @logoHeight;"/>
+
+                            @if (editMode)
+                            {
+                                <!-- Logo Styling Controls -->
+                                <div class="logo-styling-controls">
+                                    <label>Margin Top:</label>
+                                    <input type="text" @bind="logoMarginTop"/>
+
+                                    <label>Margin Left:</label>
+                                    <input type="text" @bind="logoMarginLeft"/>
+
+                                    <label>Width:</label>
+                                    <input type="text" @bind="logoWidth"/>
+
+                                    <label>Height:</label>
+                                    <input type="text" @bind="logoHeight"/>
+                                </div>
+                            }
+                        </div>
+                        <!-- Room Number -->
+                        <div class="roomNumber" style="margin-top: @roomNumberMarginTop; margin-left: @roomNumberMarginLeft;font-family: @roomNumberFont;">
+                            @if (editMode)
+                            {
+                                <!-- Room Number Styling Controls -->
+                                <div class="styling-controls">
+                                    <label>Color:</label>
+                                    <input type="color" @bind="roomNumberColor"/>
+
+                                    <label>Font Size:</label>
+                                    <input type="text" @bind="roomNumberFontSize"/>
+
+                                    <label>Font Style:</label>
+                                    <input type="text" @bind="roomNumberFont"/>
+
+                                    <label>Margin Top:</label>
+                                    <input type="text" @bind="roomNumberMarginTop"/>
+
+                                    <label>Margin Left:</label>
+                                    <input type="text" @bind="roomNumberMarginLeft"/>
+                                </div>
+
+                                <textarea class="roomNumber" rows="1" cols="10"
+        style="color: @roomNumberColor; font-size: @roomNumberFontSize; margin-top: @roomNumberMarginTop"
+        @bind="@roomNumber"></textarea>
+
+                            }
+                            else
+                            {
+                                <p class="roomNumber" style="color: @roomNumberColor; font-size: @roomNumberFontSize;">
+                                    @roomNumber</p>
+                            }
+                        </div>
+                    </div>
+
+
+
+                    <!-- Names List Box -->
+                    <div class="names-container" style="margin-top: @namesMarginTop; margin-left: @namesMarginLeft; font-family: @namesFont;">
+                        @if (editMode)
+                        {
+                            <!-- Names Styling Controls -->
+                            <div class="styling-controls">
+                                <label>Color:</label>
+                                <input type="color" @bind="namesColor" />
+
+                                <label>Font Size:</label>
+                                <input type="text" @bind="namesFontSize" />
+
+                                <label>Font Style:</label>
+                                <input type="text" @bind="namesFont" />
+
+                                <label>Margin Top:</label>
+                                <input type="text" @bind="namesMarginTop" />
+
+                                <label>Margin Left:</label>
+                                <input type="text" @bind="namesMarginLeft" />
+                            </div>
+
+                            <textarea class="names" rows="2" cols="15" style="color: @namesColor; font-size: @namesFontSize; margin-top: @namesMarginTop;"
+        @bind="@peopleNames"></textarea>
+
+                        }
+                        else
+                        {
+                            @foreach (var name in peopleNames.Split('\n'))
+                            {
+                                <p class="names" style="color: @namesColor; font-size: @namesFontSize">@name</p>
+                            }
+                        }
+                    </div>
+
+
+
+
+                </BlazorCaptureElement>
+            </div>
+        </div>
+
+        <div class="side-panel">
+        <div class="filename">
+                        <label for="fileName">Nazwa pliku:</label>
+                        <input type="text" @bind="fileName" id="fileName" placeholder="Wpisz nazwę pliku" />
+                     </div>  
+        <div class="grid">
+            <Button style="@($"background-color: #5dbea3; {btnCustome}")" class="bi bi-building" Size="Size.Large" @onclick="OnShowRoomNumberClick"> Numer Sali </Button>
+            <Button style="@($"background-color: #1283e6; {btnCustome}")" class="bi bi-person-circle" Size="Size.Large" @onclick="OnShowNamesClick"> Osoby </Button>
+            <Button style="@($"background-color: #5adbb5; {btnCustome}")" class="bi bi-file-earmark-arrow-up" Size="Size.Large" @onclick="OnShowLoadClick"> Wczytaj </Button>
+            <Button style="@($"background-color: #55c2da; {btnCustome}")" class="bi bi-pencil-square" Size="Size.Large" @onclick="@(() => { editMode = true; })"> Edytuj
+            </Button>
+            <Button style="@($"background-color: #1283e6; {btnCustome}")" class="bi bi-filetype-json" Size="Size.Large" @onclick="SaveAsJson"> Zapisz do JSONA </Button>
+            <Button style="@($"background-color: #5adbb5; {btnCustome}")" class="bi bi-printer" Size="Size.Large" @onclick="Print"> Drukuj </Button>
+
+            @if (editMode)
+            {
+                <Button style="@($"background-color: #55c2da; {btnCustome}")" class="bi bi-save" Size="Size.Large" @onclick="@(() => { editMode = false; })"> Zapisz
+                    zmiany </Button>
+            }
+            
+        
+        </div>
+        </div>
+    </div>
+
+</BlazorLibrary>
+
+
+
+<Modal @ref="RoomNumber" title="Numer Sali" IsVerticallyCentered="true">
+    <BodyTemplate>
+        <input type="text" @bind="roomNumber" />
+    </BodyTemplate>
+    <FooterTemplate>
+    </FooterTemplate>
+</Modal>
+
+<Modal @ref="People" title="Osoby" IsVerticallyCentered="true">
+    <BodyTemplate>
+        <textarea @bind="peopleNames" rows="5"></textarea>
+    </BodyTemplate>
+    <FooterTemplate>
+    </FooterTemplate>
+</Modal>
+
+
+<Modal @ref="Load" title="Wczytaj" IsVerticallyCentered="true">
+    <BodyTemplate>
+        <InputFile OnChange="@LoadFiles" multiple />
+    </BodyTemplate>
+    <FooterTemplate>
+    </FooterTemplate>
+</Modal>
+
+@code {
+    private Modal RoomNumber = default!;
+    private Modal People = default!;
+    private Modal Load = default!;
+    private string roomNumber;
+    private ElementReference Img;
+    private IBrowserFile loadedFile;
+    private long maxFileSize = 1024 * 15;
+    private int maxAllowedFiles = 3;
+    private bool isLoading;
+    private string peopleNames = "";
+    private bool editMode = false;
+
+    private string btnCustome = "font-size: 26px";
+    private string roomNumberColor = "black";
+    private string roomNumberFontSize = "115px";
+
+    private string roomNumberFont = "Arial";
+
+    private string namesColor = "black";
+    private string namesFontSize = "70px";
+     private string namesFont = "Arial";
+
+     private string namesMarginTop ="3px";
+     private string namesMarginLeft = "220px";
+
+     private string roomNumberMarginTop ="35px";
+     private string roomNumberMarginLeft = "0px";
+
+    private Info info;
+    
+    private string logoMarginTop = "0px";
+    private string logoMarginLeft = "0px";
+    private string logoWidth = "200px";
+    private string logoHeight = "300px"; 
+
+    private string fileName = "data.json";
+
+    private async Task LoadFiles(InputFileChangeEventArgs e)
+    {
+        loadedFile = e.File;
+
+        using (var stream = loadedFile.OpenReadStream())
+        {
+            var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+
+            info = await JsonSerializer.DeserializeAsync<Info>(stream, options);
+            peopleNames = info.Names;
+            roomNumber = info.RoomNumber;
+        }
+    }
+
+    private async Task SaveAsJson()
+    {
+        Info data = new Info
+        {
+            RoomNumber = roomNumber,
+            Names = peopleNames
+        };
+
+        var json = JsonSerializer.Serialize(data);
+        var jsRuntime = JS;
+        
+        var safeFileName = string.IsNullOrWhiteSpace(fileName) ? "data.json" : fileName;
+        if (!safeFileName.EndsWith(".json")) safeFileName += ".json";
+
+        await jsRuntime.InvokeVoidAsync("saveAsFile", safeFileName, json, "application/json");
+    }
+    
+    private async Task Print()
+    {
+        await JS.InvokeVoidAsync("window.print");
+    }
+
+    private async Task OnShowRoomNumberClick()
+    {
+        await RoomNumber.ShowAsync();
+    }
+
+    private async Task OnShowNamesClick()
+    {
+        await People.ShowAsync();
+    }
+
+    private async Task OnShowLoadClick()
+    {
+        await Load.ShowAsync();
+    }
+
+    private async Task OnHideModalClick()
+    {
+        await RoomNumber.HideAsync();
+        await People.HideAsync();
+        await Load.HideAsync();
+    }
+
+}
